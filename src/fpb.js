@@ -17,7 +17,7 @@ var forEach = function (array, callback, scope) {
   }
 };
 
-default export class FrontendPageBuilder {
+class FrontendPageBuilder {
     constructor() {
     }
     init() {
@@ -79,3 +79,5 @@ default export class FrontendPageBuilder {
         });
     }
 }
+
+export default FrontendPageBuilder;
