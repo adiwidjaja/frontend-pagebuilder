@@ -1,0 +1,32 @@
+{
+  "name": "frontend-pagebuilder",
+  "version": "0.1.1",
+  "main": "js/sfb.js",
+  "author": "Andy Adiwidjaja <mail@adiwidjaja.com>",
+  "license": "MIT",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/adiwidjaja/frontend-pagebuilder"
+  },
+  "devDependencies": {
+    "babel-core": "^6.9.1",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "css-loader": "^0.23.1",
+    "exports-loader": "^0.6.4",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "file-loader": "^0.8.5",
+    "frontend-pagebuilder": "^0.1.0",
+    "imports-loader": "^0.6.5",
+    "node-sass": "^3.7.0",
+    "sass-loader": "^3.2.0",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0",
+    "webpack-dev-server": "^1.14.1"
+  },
+  "dependencies": {
+    "ionicons-npm": "^2.0.1",
+    "sortablejs": "^1.6.1",
+    "tinymce": "^4.6.5"
+  }
+}
