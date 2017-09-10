@@ -2,15 +2,17 @@ $grey: #eee;
 $medgrey: #aaa;
 $darkgrey: #999;
 $black:#000;
+$white:#fff;
+$white_trans:rgba($white, 0.5);
 
 $ionicons-font-path: "~ionicons-npm/fonts";
 @import "~ionicons-npm/scss/ionicons.scss";
 
-[data-sfb-section] {
+[data-fpb-section] {
     position:relative;
 }
 
-.sfb-overlay {
+.fpb-overlay {
     // position:absolute;
     // top:10px;
     // left:10px;
@@ -19,7 +21,7 @@ $ionicons-font-path: "~ionicons-npm/fonts";
     display:none;
     z-index:100;
 
-    [data-sfb-section]:hover & {
+    [data-fpb-section]:hover & {
         display:block;
     }
 
@@ -58,7 +60,7 @@ $ionicons-font-path: "~ionicons-npm/fonts";
     }
 }
 
-.sfb-tools {
+.fpb-tools {
     position:absolute;
     display:none;
     top:20px;
@@ -71,7 +73,7 @@ $ionicons-font-path: "~ionicons-npm/fonts";
     overflow:hidden;
     z-index:101;
 
-    [data-sfb-section]:hover & {
+    [data-fpb-section]:hover & {
         display:block;
     }
 
@@ -91,23 +93,55 @@ $ionicons-font-path: "~ionicons-npm/fonts";
             background-color:$medgrey;
         }
 
-        &.sfb-tools_handle {
+        &.fpb-tools_handle {
             cursor:move;
             font-size:30px;
             padding-top:0;
             @extend .ion-navicon;
         }
-        &.sfb-tools_edit {
+        &.fpb-tools_edit {
             cursor:pointer;
             @extend .ion-gear-b;
         }
-        &.sfb-tools_trash {
+        &.fpb-tools_trash {
             cursor:pointer;
             @extend .ion-trash-b;
         }
-        &.sfb-tools_show {
+        &.fpb-tools_show {
             cursor:pointer;
             @extend .ion-eye;
         }
+    }
+}
+
+.fcb-modal-component {
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+
+    .fcb-modal-overlay {
+        position:fixed;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        background-color:$white_trans;
+    }
+
+    .fcb-modal {
+        position:fixed;
+        width:100%;
+
+        @media screen and (min-width:700px) {
+            left:50%;
+            top:50%;
+            transform:translate(-50%, -50%);
+            width:600px;
+            min-height:300px;
+        }
+
+        background-color:$white;
+        padding:40px;
     }
 }

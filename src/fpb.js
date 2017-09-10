@@ -2,6 +2,11 @@ require("./scss/fpb-styles.scss");
 import Sortable from "sortablejs";
 var tinymce = window.tinymce; //BAD
 
+import React from 'react';
+import ReactDOM from 'react-dom';
+import FrontendEditor from "./editor/FrontendEditor.jsx";
+import ModalForm from "./editor/ModalForm.jsx";
+
 function ready(fn) {
   if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
     fn();
@@ -19,33 +24,50 @@ var forEach = function (array, callback, scope) {
 
 class FrontendPageBuilder {
     constructor() {
+        this.init = this.init.bind(this);
     }
-    init(selector) {
+    init(selector, content, editorconf) {
+        const modalelem = document.body.appendChild(document.createElement("div", {id:'fpb-modal-container'}));
+        ReactDOM.render(<ModalForm ref={(modal) => { this.modal = modal; }}/>, modalelem);
+
+        const modal = this.modal;
+        ready(function() {
+            var areas = document.querySelectorAll("[data-fpb-content]");
+            forEach(areas, function(i, area){
+                ReactDOM.render(<FrontendEditor content={content} editorconf={editorconf} modal={modal}/>, area);
+            });
+        });
+    }
+}
+
+export default FrontendPageBuilder;
+
+
         // tinymce.init({
-        //     selector: '[data-sfb-valuetype="string"]',
+        //     selector: '[data-fpb-valuetype="string"]',
         //     inline: true,
         //     toolbar: 'undo redo',
         //     menubar: false
         // });
 
         // tinymce.init({
-        //     selector: '[data-sfb-valuetype="rich"]',
+        //     selector: '[data-fpb-valuetype="rich"]',
         //     inline: true,
         //     // toolbar: 'undo redo',
         //     menubar: false
         // });
 
         // function serializeContent() {
-        //     var areas = document.querySelectorAll("[data-sfb-content]");
+        //     var areas = document.querySelectorAll("[data-fpb-content]");
         //     forEach(areas, function(i, area){
         //         var data = [];
-        //         var sections = area.querySelectorAll("[data-sfb-section]");
+        //         var sections = area.querySelectorAll("[data-fpb-section]");
         //         forEach(sections, function(i, section){
         //             var sectiondata = {};
-        //             var fields = section.querySelectorAll("[data-sfb-value]");
+        //             var fields = section.querySelectorAll("[data-fpb-value]");
         //             forEach(fields, function(i, field) {
-        //                 var name = field.getAttribute("data-sfb-value");
-        //                 var type = field.getAttribute("data-sfb-valuetype");
+        //                 var name = field.getAttribute("data-fpb-value");
+        //                 var type = field.getAttribute("data-fpb-valuetype");
         //                 var value = field.innerHTML;
         //                 sectiondata[name] = value;
         //             });
@@ -55,29 +77,25 @@ class FrontendPageBuilder {
         //     });
         // }
 
-        // var buttonrow = '<ul class="sfb-tools"><li class="sfb-tools_handle"></li><li class="sfb-tools_edit"></li><li class="sfb-tools_trash"></li><li class="sfb-tools_show"></li></ul><div class="sfb-overlay"><span></span><span></span><span></span><span></span></div>'
+        // var buttonrow = '<ul class="fpb-tools"><li class="fpb-tools_handle"></li><li class="fpb-tools_edit"></li><li class="fpb-tools_trash"></li><li class="fpb-tools_show"></li></ul><div class="fpb-overlay"><span></span><span></span><span></span><span></span></div>'
 
         // ready(function() {
 
-        //     var areas = document.querySelectorAll("[data-sfb-content]");
+        //     var areas = document.querySelectorAll("[data-fpb-content]");
         //     forEach(areas, function(i, area){
         //         Sortable.create(area, {
         //             animation: 150,
-        //             // draggable: "[data-sfb-section]",
-        //             handle: ".sfb-tools_handle"
+        //             // draggable: "[data-fpb-section]",
+        //             handle: ".fpb-tools_handle"
         //         });
-        //         var sections = area.querySelectorAll("[data-sfb-section]");
+        //         var sections = area.querySelectorAll("[data-fpb-section]");
         //         forEach(sections, function(i, section){
         //             section.insertAdjacentHTML('afterbegin', buttonrow);
-        //             // section.classList.add("sfb-draggable");
+        //             // section.classList.add("fpb-draggable");
         //         });
         //     });
 
-        //     document.getElementById("sfb-save").addEventListener("click", function(e) {
+        //     document.getElementById("fpb-save").addEventListener("click", function(e) {
         //         serializeContent();
         //     });
         // });
-    }
-}
-
-export default FrontendPageBuilder;
