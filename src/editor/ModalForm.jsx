@@ -38,12 +38,15 @@ export default class ModalForm extends React.Component {
     onOk() {
         alert("Ok!");
     }
+    submitForm(formdata) {
+        console.log(formdata);
+    }
     render() {
         if(this.state.showmodal)
             return (
                 <Modal hideModal={this.hideModal} showOk={false}>
                     {this.state.content}
-                    {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} />:null}
+                    {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} onSubmit={this.submitForm}/>:null}
                 </Modal>
             );
         else return <div></div>;

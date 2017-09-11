@@ -1,6 +1,5 @@
 require("./scss/fpb-styles.scss");
 import Sortable from "sortablejs";
-var tinymce = window.tinymce; //BAD
 
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -31,12 +30,12 @@ class FrontendPageBuilder {
         ReactDOM.render(<ModalForm ref={(modal) => { this.modal = modal; }}/>, modalelem);
 
         const modal = this.modal;
-        ready(function() {
+        // ready(function() {
             var areas = document.querySelectorAll("[data-fpb-content]");
             forEach(areas, function(i, area){
                 ReactDOM.render(<FrontendEditor content={content} editorconf={editorconf} modal={modal}/>, area);
             });
-        });
+        // });
     }
 }
 
