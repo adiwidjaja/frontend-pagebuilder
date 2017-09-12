@@ -4,11 +4,20 @@ import PropTypes from 'prop-types';
 export default class Modal extends React.Component {
     constructor(props) {
         super(props);
+        this.handleKey = this.handleKey.bind(this);
         this.handleBackgroundClick = this.handleBackgroundClick.bind(this);
         this.onOk = this.onOk.bind(this);
     }
+    componentWillMount(){
+        window.document.addEventListener("keydown", this.handleKey, false);
+    }
+    handleKey(event) {
+        if(event.keyCode == 27){
+            this.props.hideModal();
+        }
+    }
     handleBackgroundClick(e) {
-        if (e.target === e.currentTarget) this.props.hideModal();
+        // if (e.target === e.currentTarget) this.props.hideModal();
     }
     onOk() {
         this.props.onOk();
