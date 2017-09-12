@@ -10,10 +10,12 @@ export default class ModalForm extends React.Component {
         this.showForm = this.showForm.bind(this);
         this.hideModal = this.hideModal.bind(this);
         this.onOk = this.onOk.bind(this);
+        this.submitForm = this.submitForm.bind(this);
         this.state = {
             showmodal: false,
             formdef: null,
             formdata: null,
+            callback: data => {},
             content: <p></p>
         };
     }
@@ -23,11 +25,12 @@ export default class ModalForm extends React.Component {
             content
         });
     }
-    showForm(formdef, formdata) {
+    showForm(formdef, formdata, callback) {
         this.setState({
             showmodal: true,
             formdef: formdef,
-            formdata: formdata
+            formdata: formdata,
+            callback: callback
         });
     }
     hideModal(e) {
@@ -40,6 +43,8 @@ export default class ModalForm extends React.Component {
     }
     submitForm(formdata) {
         console.log(formdata);
+        this.state.callback(formdata.formData);
+        this.hideModal();
     }
     render() {
         if(this.state.showmodal)

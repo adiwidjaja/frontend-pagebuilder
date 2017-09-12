@@ -21,9 +21,15 @@ export default class Section {
         return this.data.content;
     }
 
+    //TODO: Rename!
     setContent(name, content) {
         this.data.content[name] = content;
         this.onChange(this.data.content, false);
+    }
+
+    mergeContent(content) {
+        this.data.content = Object.assign(this.data.content, content);
+        this.onChange(this.data.content, true);
     }
 
     onChange(content, rerender) {

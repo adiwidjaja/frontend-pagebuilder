@@ -14,7 +14,7 @@ export default class Content {
     }
 
     onChange(sectionlist, rerender) {
-        // console.log(sectionlist);
+        console.log(sectionlist);
         if(rerender) {
             this.sectionlist = sectionlist;
             this.editor.onChange(this); //Or content?

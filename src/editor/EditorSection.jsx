@@ -13,7 +13,6 @@ const processNodeDefinitions = new htmltoreact.ProcessNodeDefinitions(React);
 export default class EditorSection extends React.Component {
     constructor(props) {
         super(props);
-        this.editForm = this.editForm.bind(this);
         // this.section = this.props.section;
         this.processingInstructions = [
             {
@@ -57,12 +56,21 @@ export default class EditorSection extends React.Component {
                     const reactobj = processNodeDefinitions.processDefaultNode(node, children, index);
                     let content = "";
                     //Render children to html
-                    reactobj.props.children.forEach(obj => {
-                        if(typeof(obj) == "string")
-                            content += obj;
-                        else
-                            content += ReactDOMServer.renderToStaticMarkup(obj);
-                    });
+                    let reactobjchildren = reactobj.props.children;
+                    console.log(reactobjchildren);
+
+                    //After editing, children are a string?
+                    if(typeof(reactobjchildren) == "string") {
+                        content += reactobjchildren;
+                    } else {
+                        reactobjchildren.forEach(obj => {
+                            if(typeof(obj) == "string")
+                                content += obj;
+                            else
+                                content += ReactDOMServer.renderToStaticMarkup(obj);
+                        });
+                    }
+                    var name = node.attribs['data-sfb-value'];
                     return React.createElement(TinyMCE, {
                         content: content,
                         config: {
@@ -85,15 +93,19 @@ export default class EditorSection extends React.Component {
         this.handleEditorChange = this.handleEditorChange.bind(this);
         this.editForm = this.editForm.bind(this);
         this.buildTemplate = this.buildTemplate.bind(this);
+        this.saveForm = this.saveForm.bind(this);
 
         this.buildTemplate();
     }
     handleEditorChange(e, name) {
-        // console.log("handleEditorChange");
+        // console.log("handleEditorChange: "+name);
         this.props.section.setContent(name, e.target.getContent());
     }
     editForm() {
-        this.props.modal.showForm(this.props.elementdef.formdef, this.props.data);
+        this.props.modal.showForm(this.props.elementdef.formdef, this.props.section.getContent(), this.saveForm);
+    }
+    saveForm(data) {
+        this.props.section.mergeContent(data);
     }
     buildTemplate() {
         this.buttonrow = <ul className="fpb-tools">
