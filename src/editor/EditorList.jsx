@@ -19,7 +19,20 @@ export default class EditorList extends React.Component {
      */
     onSort(order, sortable, evt) {
         // console.log(order);
-        this.props.sectionlist.setOrder(order);
+        // console.log(sortable);
+        // console.log(evt);
+        if(evt.type == "add") {
+            //TODO Do something
+            const elementtype = evt.item.getAttribute("data-type");
+            const index = evt.newIndex;
+            const elementdef = this.elementdefinitions[elementtype];
+            this.props.sectionlist.insertAt(index, {
+                type: elementtype,
+                content: {} //Todo: Defaults
+            });
+        } else {
+            this.props.sectionlist.setOrder(order);
+        }
     }
 
     render() {
@@ -40,8 +53,10 @@ export default class EditorList extends React.Component {
 
         return <Sortable
             options={{
-                handle: '.fpb-tools_handle'
+                handle: '.fpb-tools_handle',
+                group: 'elements'
             }}
+            className="fpb-list"
             onChange={this.onSort}
             >{output}
         </Sortable>;

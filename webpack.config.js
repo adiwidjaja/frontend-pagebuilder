@@ -6,7 +6,7 @@ module.exports = {
     entry: {
         fpb: [
             // 'webpack-dev-server/client?http://localhost:8080',
-            './src/fpb.js'
+            './src/fpb.jsx'
         ]
     },
     output: {

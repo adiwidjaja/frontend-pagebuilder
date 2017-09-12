@@ -8,6 +8,7 @@ export default class Section {
         this.getContent = this.getContent.bind(this);
         this.setContent = this.setContent.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.delete = this.delete.bind(this);
     }
     getData() {
         return this.data;
@@ -30,6 +31,10 @@ export default class Section {
     mergeContent(content) {
         this.data.content = Object.assign(this.data.content, content);
         this.onChange(this.data.content, true);
+    }
+
+    delete() {
+        this.parent.remove(this);
     }
 
     onChange(content, rerender) {

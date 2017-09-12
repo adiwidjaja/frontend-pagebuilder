@@ -5,6 +5,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import FrontendEditor from "./editor/FrontendEditor.jsx";
 import ModalForm from "./editor/ModalForm.jsx";
+import AddList from "./editor/AddList.jsx";
 
 function ready(fn) {
   if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading"){
@@ -28,6 +29,9 @@ class FrontendPageBuilder {
     init(selector, content, editorconf) {
         const modalelem = document.body.appendChild(document.createElement("div", {id:'fpb-modal-container'}));
         ReactDOM.render(<ModalForm ref={(modal) => { this.modal = modal; }}/>, modalelem);
+
+        const addelem = document.body.appendChild(document.createElement("div", {id:'fpb-addlist-container'}));
+        ReactDOM.render(<AddList ref={(addlist) => { this.addlist = addlist; }} elements={editorconf.elements}/>, addelem);
 
         const modal = this.modal;
         // ready(function() {

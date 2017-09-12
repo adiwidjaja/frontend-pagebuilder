@@ -13,33 +13,55 @@ export default class ModalForm extends React.Component {
         this.submitForm = this.submitForm.bind(this);
         this.state = {
             showmodal: false,
+            showok: true,
             formdef: null,
             formdata: null,
             callback: data => {},
+            title: '',
             content: <p></p>
         };
     }
-    showModal(content) {
+    showModal(content, title) {
         this.setState({
             showmodal: true,
-            content
+            content,
+            title: title,
+            showok: true
         });
     }
-    showForm(formdef, formdata, callback) {
+    showConfirm(content, title, callback) {
         this.setState({
             showmodal: true,
+            showok: true,
+            content: content,
+            title: title,
+            callback: callback
+        });
+    }
+    showForm(formdef, formdata, title, callback) {
+        this.setState({
+            showmodal: true,
+            showok: false,
             formdef: formdef,
             formdata: formdata,
+            title: title,
             callback: callback
         });
     }
     hideModal(e) {
         this.setState({
-            showmodal: false
+            showmodal: false,
+            showok: false,
+            formdef: null,
+            formdata: null,
+            title: '',
+            callback: data => {},
+            content: <p></p>
         });
     }
     onOk() {
-        alert("Ok!");
+        this.state.callback();
+        this.hideModal();
     }
     submitForm(formdata) {
         console.log(formdata);
@@ -49,9 +71,13 @@ export default class ModalForm extends React.Component {
     render() {
         if(this.state.showmodal)
             return (
-                <Modal hideModal={this.hideModal} showOk={false}>
+                <Modal title={this.state.title} hideModal={this.hideModal} showOk={this.state.showok} onOk={this.onOk}>
                     {this.state.content}
-                    {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} onSubmit={this.submitForm}/>:null}
+                    {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} onSubmit={this.submitForm}>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-primary">Speichern</button>
+                        </div>
+                    </Form>:null}
                 </Modal>
             );
         else return <div></div>;

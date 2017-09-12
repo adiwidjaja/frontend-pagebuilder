@@ -57,7 +57,7 @@ export default class EditorSection extends React.Component {
                     let content = "";
                     //Render children to html
                     let reactobjchildren = reactobj.props.children;
-                    console.log(reactobjchildren);
+                    // console.log(reactobjchildren);
 
                     //After editing, children are a string?
                     if(typeof(reactobjchildren) == "string") {
@@ -94,6 +94,8 @@ export default class EditorSection extends React.Component {
         this.editForm = this.editForm.bind(this);
         this.buildTemplate = this.buildTemplate.bind(this);
         this.saveForm = this.saveForm.bind(this);
+        this.trash = this.trash.bind(this);
+        this.doTrash = this.doTrash.bind(this);
 
         this.buildTemplate();
     }
@@ -102,18 +104,23 @@ export default class EditorSection extends React.Component {
         this.props.section.setContent(name, e.target.getContent());
     }
     editForm() {
-        this.props.modal.showForm(this.props.elementdef.formdef, this.props.section.getContent(), this.saveForm);
+        this.props.modal.showForm(this.props.elementdef.formdef, this.props.section.getContent(), "Element bearbeiten", this.saveForm);
     }
     saveForm(data) {
         this.props.section.mergeContent(data);
+    }
+    trash() {
+        this.props.modal.showConfirm("Element wirklich löschen?", "Element löschen", this.doTrash)
+    }
+    doTrash() {
+        this.props.section.delete();
     }
     buildTemplate() {
         this.buttonrow = <ul className="fpb-tools">
             <li className="fpb-tools_handle"></li>
             <li className="fpb-tools_edit" onClick={this.editForm}></li>
-            <li className="fpb-tools_trash"></li>
-            <li className="fpb-tools_show"></li>
-        </ul>;
+            <li className="fpb-tools_trash" onClick={this.trash}></li>
+        </ul>; //<li className="fpb-tools_show"></li>
 
         this.overlay = <div className="fpb-overlay"><span></span><span></span><span></span><span></span></div>;
 

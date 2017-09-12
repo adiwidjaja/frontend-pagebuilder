@@ -1,7 +1,7 @@
 {
   "name": "frontend-pagebuilder",
   "version": "0.1.1",
-  "main": "src/fpb.js",
+  "main": "src/fpb.jsx",
   "author": "Andy Adiwidjaja <mail@adiwidjaja.com>",
   "license": "MIT",
   "repository": {

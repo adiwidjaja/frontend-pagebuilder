@@ -15,8 +15,12 @@ export default class Modal extends React.Component {
         if(event.keyCode == 27){
             this.props.hideModal();
         }
+        if(event.keyCode == 13 && this.props.onOk){
+            this.onOk();
+        }
     }
     handleBackgroundClick(e) {
+        this.props.hideModal();
         // if (e.target === e.currentTarget) this.props.hideModal();
     }
     onOk() {
@@ -26,6 +30,8 @@ export default class Modal extends React.Component {
     render() {
         const okButton = this.props.showOk ? (
           <button
+            type="button"
+            className="btn btn-primary"
             onClick={this.onOk}
             disabled={this.props.okDisabled}
           >
@@ -33,18 +39,24 @@ export default class Modal extends React.Component {
           </button>
         ) : null;
 
+        const buttons = okButton ? <div className="modal-footer">{okButton}</div> : null;
+
         return (
-            <div className="fcb-modal-component">
-                <div className="fcb-modal-overlay"></div>
-                <div className="fcb-modal" onClick={this.handleBackgroundClick}>
-                  <div className="fcb-modal_header">
-                    <h1>{this.props.title}</h1>
-                    <button onClick={this.props.hideModal}>Close</button>
+            <div className="fpb-modal-component fpb">
+                <div className="fpb-modal-overlay" onClick={this.handleBackgroundClick}></div>
+                <div className="fpb-modal">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <button type="button" className="close" onClick={this.props.hideModal} aria-label="Close">
+                                <span>&times;</span>
+                            </button>
+                            <h5 className="modal-title">{this.props.title}</h5>
+                        </div>
+                      <div className="modal-body">
+                        {this.props.children}
+                      </div>
+                      {buttons}
                   </div>
-
-                  {this.props.children}
-
-                  {okButton}
                 </div>
             </div>
         );
