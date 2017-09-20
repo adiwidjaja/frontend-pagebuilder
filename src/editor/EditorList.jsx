@@ -7,9 +7,6 @@ export default class EditorList extends React.Component {
     constructor(props) {
         super(props);
         this.elementdefinitions = this.props.defs;
-        // this.state = {
-        //     sectionlist: this.props.content
-        // };
 
         this.onSort = this.onSort.bind(this);
     }
@@ -46,17 +43,21 @@ export default class EditorList extends React.Component {
 
             // console.log(section);
 
-            output.push(<EditorSection key={uniqueId()} id={i} section={section} elementdef={elementdef} modal={this.props.modal}>
+            output.push(<EditorSection key={uniqueId()} id={i} section={section} elementdef={elementdef} defs={this.elementdefinitions} modal={this.props.modal}>
             </EditorSection>); // component={Editable}
             i++;
         });
 
+        const group = this.props.group?this.props.group:'default';
+
+        let classnames = this.props.extraclasses?this.props.extraclasses+" fpb-list":"fpb-list";
+
         return <Sortable
             options={{
                 handle: '.fpb-tools_handle',
-                group: 'elements'
+                group: group
             }}
-            className="fpb-list"
+            className={classnames}
             onChange={this.onSort}
             >{output}
         </Sortable>;

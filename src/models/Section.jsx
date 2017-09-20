@@ -1,3 +1,5 @@
+import SectionList from "./SectionList.jsx";
+
 export default class Section {
     constructor(parent, data) {
         this.parent = parent;
@@ -20,6 +22,13 @@ export default class Section {
 
     getContent() {
         return this.data.content;
+    }
+
+    getChildList(name) {
+        if(this.data[name] !== undefined)
+            return new SectionList(this, this.data[name]);
+        else
+            return new SectionList([]);
     }
 
     //TODO: Rename!

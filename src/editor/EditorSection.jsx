@@ -3,6 +3,7 @@ import ReactDOMServer from 'react-dom/server';
 import hogan from 'hogan.js';
 import htmltoreact from 'html-to-react';
 import TinyMCE from 'react-tinymce';
+import EditorList from './EditorList.jsx';
 
 const isValidNode = function () {
     return true;
@@ -16,9 +17,20 @@ export default class EditorSection extends React.Component {
         // this.section = this.props.section;
         this.processingInstructions = [
             {
-                // This is REQUIRED, it tells the parser
-                // that we want to insert our React
-                // component as a child
+                replaceChildren: false,
+                shouldProcessNode: (node) => {
+                    // return true;
+                    return node.attribs && node.attribs['data-sfb-childgroup'];
+                },
+                processNode: (node, children, index) => {
+                    // console.log(children);
+                    var name = node.attribs['data-sfb-value'];
+                    var group = node.attribs['data-sfb-childgroup'];
+                    var extraclasses = node.attribs['class']
+                    return <EditorList sectionlist={this.props.section.getChildList(name)} defs={this.props.defs} modal={this.props.modal} extraclasses={extraclasses}/>;
+                }
+            },
+            {
                 replaceChildren: true,
                 shouldProcessNode: (node) => {
                     // return true;
@@ -43,9 +55,6 @@ export default class EditorSection extends React.Component {
                 }
             },
             {
-                // This is REQUIRED, it tells the parser
-                // that we want to insert our React
-                // component as a child
                 replaceChildren: true,
                 shouldProcessNode: (node) => {
                     // return true;
