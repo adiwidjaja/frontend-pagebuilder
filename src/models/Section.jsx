@@ -25,10 +25,12 @@ export default class Section {
     }
 
     getChildList(name) {
-        if(this.data[name] !== undefined)
-            return new SectionList(this, this.data[name]);
+        // console.log("subsection");
+        // console.log(this.data);
+        if(this.data.content[name] !== undefined)
+            return new SectionList(name, this, this.data.content[name]);
         else
-            return new SectionList([]);
+            return new SectionList(name, []);
     }
 
     //TODO: Rename!
@@ -49,5 +51,11 @@ export default class Section {
     onChange(content, rerender) {
         // console.log("Section.onChange");
         this.parent.onChange(this, rerender);
+    }
+
+    onChildrenChange(name, sectionlist, rerender) {
+        this.data.content[name] = sectionlist.getData();
+        // console.log(this.data);
+        this.onChange(this, true);
     }
 }

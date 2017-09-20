@@ -4,19 +4,19 @@ Base content model, including all others.
 */
 export default class Content {
     constructor(editor, content) {
-        this.sectionlist = new SectionList(this, content.sections);
+        this.sectionlist = new SectionList("sectionlist", this, content.sections);
         this.editor = editor;
-        this.onChange = this.onChange.bind(this);
+        this.onChildrenChange = this.onChildrenChange.bind(this);
     }
 
     getList() {
         return this.sectionlist;
     }
 
-    onChange(sectionlist, rerender) {
+    onChildrenChange(name, sectionlist, rerender) {
         // console.log(sectionlist);
+        this.sectionlist = sectionlist;
         if(rerender) {
-            this.sectionlist = sectionlist;
             this.editor.onChange(this); //Or content?
         }
     }

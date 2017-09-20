@@ -31,7 +31,7 @@ class FrontendPageBuilder {
         ReactDOM.render(<ModalForm ref={(modal) => { this.modal = modal; }}/>, modalelem);
 
         const addelem = document.body.appendChild(document.createElement("div", {id:'fpb-addlist-container'}));
-        ReactDOM.render(<AddList ref={(addlist) => { this.addlist = addlist; }} elements={editorconf.elements}/>, addelem);
+        ReactDOM.render(<AddList ref={(addlist) => { this.addlist = addlist; }} elements={editorconf.elements} groups={editorconf.groups}/>, addelem);
 
         const modal = this.modal;
 

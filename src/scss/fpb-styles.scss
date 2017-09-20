@@ -42,7 +42,7 @@ $icon-font-path: '~bootstrap-sass/fonts/bootstrap/';
     display:none;
     z-index:100;
 
-    [data-fpb-section]:hover & {
+    [data-fpb-section]:hover > & {
         display:block;
     }
 
@@ -94,7 +94,7 @@ $icon-font-path: '~bootstrap-sass/fonts/bootstrap/';
     overflow:hidden;
     z-index:101;
 
-    [data-fpb-section]:hover & {
+    [data-fpb-section]:hover > & {
         display:block;
     }
 

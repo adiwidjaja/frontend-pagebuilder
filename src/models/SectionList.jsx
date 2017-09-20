@@ -1,7 +1,8 @@
 import Section from "./Section.jsx";
 
 export default class SectionList {
-    constructor(parent, sections) {
+    constructor(name, parent, sections) {
+        this.name = name;
         this.parent = parent;
         this.sections = sections.map( sectiondata => new Section(this, sectiondata) );
 
@@ -22,12 +23,20 @@ export default class SectionList {
         this.onChange(null, true);
     }
 
-    //Subelement changed
+    //I changed
     onChange(content, rerender) {
-        this.parent.onChange(
-            this, rerender
-        );
+        if(rerender)
+            this.parent.onChildrenChange(
+                this.name, this, rerender
+            );
     }
+
+    // //Subelement changed
+    // onChildrenChange(content, rerender) {
+    //     this.parent.onChildrenChange(
+    //         this.name, this, rerender
+    //     );
+    // }
 
     getData() {
         return this.sections.map(

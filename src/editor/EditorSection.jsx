@@ -26,8 +26,8 @@ export default class EditorSection extends React.Component {
                     // console.log(children);
                     var name = node.attribs['data-sfb-value'];
                     var group = node.attribs['data-sfb-childgroup'];
-                    var extraclasses = node.attribs['class']
-                    return <EditorList sectionlist={this.props.section.getChildList(name)} defs={this.props.defs} modal={this.props.modal} extraclasses={extraclasses}/>;
+                    var extraclasses = node.attribs['class'];
+                    return <EditorList group={group} sectionlist={this.props.section.getChildList(name)} defs={this.props.defs} modal={this.props.modal} extraclasses={extraclasses}/>;
                 }
             },
             {

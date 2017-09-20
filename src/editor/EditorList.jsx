@@ -36,7 +36,9 @@ export default class EditorList extends React.Component {
         // console.log("Rerender EditorList");
         const output = [];
         let i = 0;
-        this.props.sectionlist.getChildren().forEach((section) => {
+        const sections = this.props.sectionlist.getChildren();
+        console.log(sections);
+        sections.forEach((section) => {
 
             const elementdef = this.elementdefinitions[section.getType()];
             const template = elementdef.template;
@@ -51,6 +53,8 @@ export default class EditorList extends React.Component {
         const group = this.props.group?this.props.group:'default';
 
         let classnames = this.props.extraclasses?this.props.extraclasses+" fpb-list":"fpb-list";
+
+        console.log("rerender "+group);
 
         return <Sortable
             options={{
