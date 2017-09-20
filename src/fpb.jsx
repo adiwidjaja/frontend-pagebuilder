@@ -34,12 +34,15 @@ class FrontendPageBuilder {
         ReactDOM.render(<AddList ref={(addlist) => { this.addlist = addlist; }} elements={editorconf.elements}/>, addelem);
 
         const modal = this.modal;
-        // ready(function() {
-            var areas = document.querySelectorAll("[data-fpb-content]");
-            forEach(areas, function(i, area){
-                ReactDOM.render(<FrontendEditor content={content} editorconf={editorconf} modal={modal}/>, area);
-            });
-        // });
+
+        var areas = document.querySelectorAll("[data-fpb-content]");
+        forEach(areas, (i, area) => {
+            ReactDOM.render(<FrontendEditor ref={(editor) => { this.editor = editor; }} content={content} editorconf={editorconf} modal={modal}/>, area);
+        });
+    }
+
+    getContent() {
+        return this.editor.getContent();
     }
 }
 

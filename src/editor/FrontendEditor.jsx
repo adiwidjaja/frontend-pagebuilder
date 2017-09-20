@@ -18,6 +18,9 @@ export default class FrontendEditor extends React.Component {
 
         this.onChange = this.onChange.bind(this);
     }
+    getContent() {
+        return this.state.content.serializeContent();
+    }
     onChange(content) {
         // console.log("FrontendEditor.onChange");
         this.setState({

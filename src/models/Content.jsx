@@ -22,8 +22,8 @@ export default class Content {
     }
 
     serializeContent() {
-        data = this.sectionlist.getData();
-        console.log(data);
+        const data = this.sectionlist.getData();
+        return data;
     }
 }
 
