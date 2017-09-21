@@ -21,11 +21,24 @@ export default class FrontendEditor extends React.Component {
     getContent() {
         return this.state.content.serializeContent();
     }
-    onChange(content) {
-        // console.log("FrontendEditor.onChange");
+    setContent(content) {
+        // this.state.content.setContent(content);
         this.setState({
-            content: content
+            content: new Content(this, content)
         });
+    }
+    onChange(content, rerender) {
+        // console.log("FrontendEditor.onChange");
+
+        if(rerender) {
+            this.setState({
+                content: content
+            });
+        }
+
+        if(this.props.callback) {
+            this.props.callback(this.getContent(), rerender);
+        }
     }
     render() {
         return <div>

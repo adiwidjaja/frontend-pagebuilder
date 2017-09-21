@@ -23,8 +23,11 @@ var forEach = function (array, callback, scope) {
 };
 
 class FrontendPageBuilder {
-    constructor() {
+    constructor(callback=null) {
         this.init = this.init.bind(this);
+        this.getContent = this.getContent.bind(this);
+        this.setContent = this.setContent.bind(this);
+        this.callback = callback;
     }
     init(selector, content, editorconf) {
         const modalelem = document.body.appendChild(document.createElement("div", {id:'fpb-modal-container'}));
@@ -37,12 +40,16 @@ class FrontendPageBuilder {
 
         var areas = document.querySelectorAll("[data-fpb-content]");
         forEach(areas, (i, area) => {
-            ReactDOM.render(<FrontendEditor ref={(editor) => { this.editor = editor; }} content={content} editorconf={editorconf} modal={modal}/>, area);
+            ReactDOM.render(<FrontendEditor ref={(editor) => { this.editor = editor; }} content={content} editorconf={editorconf} modal={modal} callback={this.callback}/>, area);
         });
     }
 
     getContent() {
         return this.editor.getContent();
+    }
+
+    setContent(content) {
+        this.editor.setContent(content);
     }
 }
 

@@ -10,6 +10,7 @@ export default class Section {
         this.getContent = this.getContent.bind(this);
         this.setContent = this.setContent.bind(this);
         this.onChange = this.onChange.bind(this);
+        this.mergeContent = this.mergeContent.bind(this);
         this.delete = this.delete.bind(this);
     }
     getData() {
@@ -54,8 +55,9 @@ export default class Section {
     }
 
     onChildrenChange(name, sectionlist, rerender) {
-        this.data.content[name] = sectionlist.getData();
+        if(rerender)
+            this.data.content[name] = sectionlist.getData();
         // console.log(this.data);
-        this.onChange(this, true);
+        this.onChange(this, rerender);
     }
 }

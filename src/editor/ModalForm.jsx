@@ -64,7 +64,6 @@ export default class ModalForm extends React.Component {
         this.hideModal();
     }
     submitForm(formdata) {
-        console.log(formdata);
         this.state.callback(formdata.formData);
         this.hideModal();
     }
@@ -75,7 +74,7 @@ export default class ModalForm extends React.Component {
                     {this.state.content}
                     {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} onSubmit={this.submitForm}>
                         <div className="modal-footer">
-                            <button type="button" className="btn btn-primary">Speichern</button>
+                            <button type="submit" className="btn btn-primary">Speichern</button>
                         </div>
                     </Form>:null}
                 </Modal>

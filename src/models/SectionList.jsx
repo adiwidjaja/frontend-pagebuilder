@@ -25,10 +25,9 @@ export default class SectionList {
 
     //I changed
     onChange(content, rerender) {
-        if(rerender)
-            this.parent.onChildrenChange(
-                this.name, this, rerender
-            );
+        this.parent.onChildrenChange(
+            this.name, this, rerender
+        );
     }
 
     // //Subelement changed
@@ -42,6 +41,10 @@ export default class SectionList {
         return this.sections.map(
             (section) => section.getData()
         );
+    }
+
+    setData(sections) {
+        this.sections = sections.map( sectiondata => new Section(this, sectiondata) );
     }
 
     insertAt(index, sectiondata) {

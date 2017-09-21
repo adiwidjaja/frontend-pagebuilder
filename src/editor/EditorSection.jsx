@@ -39,6 +39,7 @@ export default class EditorSection extends React.Component {
                 processNode: (node, children, index) => {
                     // console.log(children);
                     var name = node.attribs['data-sfb-value'];
+                    let editor = null;
                     return React.createElement(TinyMCE, {
                         content: children.join(),
                         config: {
@@ -49,8 +50,12 @@ export default class EditorSection extends React.Component {
                             forced_root_block : "",
                             force_br_newlines : true,
                             force_p_newlines : false,
+                            setup: function(ref) {
+                                editor = ref;
+                            }
                         },
-                        onChange: e => { this.handleEditorChange(e, name) }
+                        onChange: e => { this.handleEditorChange(editor, name); },
+                        onKeyup: e => { this.handleEditorChange(editor, name); }
                     }, null);
                 }
             },
@@ -80,14 +85,20 @@ export default class EditorSection extends React.Component {
                         });
                     }
                     var name = node.attribs['data-sfb-value'];
-                    return React.createElement(TinyMCE, {
+                    let editor = null;
+                    const reditor = React.createElement(TinyMCE, {
                         content: content,
                         config: {
                             inline: true,
-                            menubar: false
+                            menubar: false,
+                            setup: function(ref) {
+                                editor = ref;
+                            }
                         },
-                        onChange: e => { this.handleEditorChange(e, name) }
+                        onChange: e => { this.handleEditorChange(editor, name); },
+                        onKeyup: e => { this.handleEditorChange(editor, name); }
                     }, null);
+                    return reditor;
                 }
             },
             {
@@ -108,9 +119,9 @@ export default class EditorSection extends React.Component {
 
         this.buildTemplate();
     }
-    handleEditorChange(e, name) {
+    handleEditorChange(editor, name) {
         // console.log("handleEditorChange: "+name);
-        this.props.section.setContent(name, e.target.getContent());
+        this.props.section.setContent(name, editor.getContent());
     }
     editForm() {
         this.props.modal.showForm(this.props.elementdef.formdef, this.props.section.getContent(), "Element bearbeiten", this.saveForm);

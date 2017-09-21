@@ -16,14 +16,16 @@ export default class Content {
     onChildrenChange(name, sectionlist, rerender) {
         // console.log(sectionlist);
         this.sectionlist = sectionlist;
-        if(rerender) {
-            this.editor.onChange(this); //Or content?
-        }
+        this.editor.onChange(this, rerender);
     }
 
     serializeContent() {
         const data = this.sectionlist.getData();
         return data;
+    }
+
+    setContent(content) {
+        this.sectionlist.setData(content.sections);
     }
 }
 
