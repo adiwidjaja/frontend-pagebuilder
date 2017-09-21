@@ -4,6 +4,8 @@ Base content model, including all others.
 */
 export default class Content {
     constructor(editor, content) {
+        if(!content.sections)
+            content.sections = [];
         this.sectionlist = new SectionList("sectionlist", this, content.sections);
         this.editor = editor;
         this.onChildrenChange = this.onChildrenChange.bind(this);
