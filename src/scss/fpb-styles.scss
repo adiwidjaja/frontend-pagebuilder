@@ -155,6 +155,11 @@ $icon-font-path: '~bootstrap-sass/fonts/bootstrap/';
         position:fixed;
         width:100%;
 
+        .modal-body {
+            max-height:80vh;
+            overflow:auto;
+        }
+
         @media screen and (min-width:700px) {
             left:50%;
             top:50%;
