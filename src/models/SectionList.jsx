@@ -4,6 +4,8 @@ export default class SectionList {
     constructor(name, parent, sections) {
         this.name = name;
         this.parent = parent;
+        if(!sections)
+            sections = [];
         this.sections = sections.map( sectiondata => new Section(this, sectiondata) );
 
         this.getChildren = this.getChildren.bind(this);

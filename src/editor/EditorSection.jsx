@@ -137,8 +137,8 @@ export default class EditorSection extends React.Component {
     }
     buildTemplate() {
         this.buttonrow = <ul className="fpb-tools">
-            <li className="fpb-tools_handle"></li>
-            <li className="fpb-tools_edit" onClick={this.editForm}></li>
+            <li className="fpb-tools_handle" title={this.props.elementdef.name}></li>
+            {this.props.elementdef.formdef?<li className="fpb-tools_edit" onClick={this.editForm}></li>:''}
             <li className="fpb-tools_trash" onClick={this.trash}></li>
         </ul>; //<li className="fpb-tools_show"></li>
 

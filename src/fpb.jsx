@@ -29,19 +29,21 @@ class FrontendPageBuilder {
         this.setContent = this.setContent.bind(this);
         this.callback = callback;
     }
-    init(selector, content, editorconf) {
-        const modalelem = document.body.appendChild(document.createElement("div", {id:'fpb-modal-container'}));
-        ReactDOM.render(<ModalForm ref={(modal) => { this.modal = modal; }}/>, modalelem);
+    init(selector, content, editorconf, editmode) {
+        if(editmode) {
+            const modalelem = document.body.appendChild(document.createElement("div", {id:'fpb-modal-container'}));
+            ReactDOM.render(<ModalForm ref={(modal) => { this.modal = modal; }}/>, modalelem);
 
-        const addelem = document.body.appendChild(document.createElement("div", {id:'fpb-addlist-container'}));
-        ReactDOM.render(<AddList ref={(addlist) => { this.addlist = addlist; }} elements={editorconf.elements} groups={editorconf.groups}/>, addelem);
+            const addelem = document.body.appendChild(document.createElement("div", {id:'fpb-addlist-container'}));
+            ReactDOM.render(<AddList ref={(addlist) => { this.addlist = addlist; }} elements={editorconf.elements} groups={editorconf.groups}/>, addelem);
 
-        const modal = this.modal;
+            const modal = this.modal;
 
-        var areas = document.querySelectorAll("[data-fpb-content]");
-        forEach(areas, (i, area) => {
-            ReactDOM.render(<FrontendEditor ref={(editor) => { this.editor = editor; }} content={content} editorconf={editorconf} modal={modal} callback={this.callback}/>, area);
-        });
+            var areas = document.querySelectorAll("[data-fpb-content]");
+            forEach(areas, (i, area) => {
+                ReactDOM.render(<FrontendEditor ref={(editor) => { this.editor = editor; }} content={content} editorconf={editorconf} modal={modal} callback={this.callback}/>, area);
+            });
+        }
     }
 
     getContent() {
