@@ -38,14 +38,48 @@ export default class EditorSection extends React.Component {
                 },
                 processNode: (node, children, index) => {
                     // console.log(children);
+                    const reactobj = processNodeDefinitions.processDefaultNode(node, children, index);
+                    let content = "";
+                    //Render children to html
+                    let reactobjchildren = reactobj.props.children;
+                    // console.log(reactobjchildren);
+
+                    //After editing, children are a string?
+                    if(typeof(reactobjchildren) == "string") {
+                        content += reactobjchildren;
+                    } else {
+                        // console.log(reactobjchildren);
+                        if(typeof(reactobjchildren) == "array") {
+                            reactobjchildren.forEach(obj => {
+                                if(typeof(obj) == "string")
+                                    content += obj;
+                                else
+                                    content += ReactDOMServer.renderToStaticMarkup(obj);
+                            });
+                        } else {
+                            //Node
+                            if(typeof(reactobjchildren) == "object" && reactobjchildren[0]) {
+                                for(var name in reactobjchildren) {
+                                    var obj = reactobjchildren[name];
+                                    if(typeof(obj) == "string")
+                                        content += obj;
+                                    else
+                                        content += ReactDOMServer.renderToStaticMarkup(obj);
+                                }
+                            } else {
+                                content += ReactDOMServer.renderToStaticMarkup(reactobjchildren);
+                            }
+                        }
+                    }
+
                     var name = node.attribs['data-sfb-value'];
                     let editor = null;
                     return React.createElement(TinyMCE, {
-                        content: children.join(),
+                        content: content,
                         config: {
                             inline: true,
                             plugins: 'code',
-                            toolbar: 'undo redo code',
+                            toolbar: 'undo redo | bold italic subscript superscript | code',
                             menubar: false,
                             forced_root_block : "",
                             force_br_newlines : true,
@@ -91,7 +125,9 @@ export default class EditorSection extends React.Component {
                         config: {
                             inline: true,
                             menubar: false,
+                            plugins: "lists link",
                             language: 'de',
+                            toolbar: "undo redo | styleselect | bold italic subscript superscript | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | code",
                             setup: function(ref) {
                                 editor = ref;
                             }
