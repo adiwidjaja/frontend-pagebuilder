@@ -53,6 +53,10 @@ class FrontendPageBuilder {
     setContent(content) {
         this.editor.setContent(content);
     }
+
+    getModal() {
+        return this.modal;
+    }
 }
 
 export default FrontendPageBuilder;

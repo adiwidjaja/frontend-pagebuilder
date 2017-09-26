@@ -91,6 +91,7 @@ export default class EditorSection extends React.Component {
                         config: {
                             inline: true,
                             menubar: false,
+                            language: 'de',
                             setup: function(ref) {
                                 editor = ref;
                             }

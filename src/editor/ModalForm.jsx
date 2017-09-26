@@ -60,7 +60,11 @@ export default class ModalForm extends React.Component {
         });
     }
     onOk() {
-        this.state.callback();
+        if(this.state.formdef) {
+            this.button.click();
+        } else {
+            this.state.callback();
+        }
         this.hideModal();
     }
     submitForm(formdata) {
@@ -72,9 +76,9 @@ export default class ModalForm extends React.Component {
             return (
                 <Modal title={this.state.title} hideModal={this.hideModal} showOk={this.state.showok} onOk={this.onOk}>
                     {this.state.content}
-                    {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} onSubmit={this.submitForm}>
+                    {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} onSubmit={this.submitForm} >
                         <div className="modal-footer">
-                            <button type="submit" className="btn btn-primary">Speichern</button>
+                            <button type="submit" className="btn btn-primary"  ref={(button) => { this.button = button; }}>Speichern</button>
                         </div>
                     </Form>:null}
                 </Modal>
