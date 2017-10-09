@@ -15,7 +15,7 @@ export default class Modal extends React.Component {
         if(event.keyCode == 27){
             this.props.hideModal();
         }
-        if(event.keyCode == 13 && this.props.onOk){
+        if(this.props.showOk && event.keyCode == 13 && this.props.onOk){
             this.onOk();
         }
     }

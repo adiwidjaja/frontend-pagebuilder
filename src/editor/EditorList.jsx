@@ -23,9 +23,12 @@ export default class EditorList extends React.Component {
             const elementtype = evt.item.getAttribute("data-type");
             const index = evt.newIndex;
             const elementdef = this.elementdefinitions[elementtype];
+            // console.log(elementdef);
+            const defaults = (elementdef.formdef && elementdef.formdef.defaults)?elementdef.formdef.defaults:{};
+            // console.log(defaults);
             this.props.sectionlist.insertAt(index, {
                 type: elementtype,
-                content: {} //Todo: Defaults
+                content: defaults
             });
         } else {
             this.props.sectionlist.setOrder(order);

@@ -25,9 +25,9 @@ export default class AddList extends React.Component {
             for(let i in groupdata.elements) {
                 const elementtype=groupdata.elements[i];
                 const elementdef = this.props.elements[elementtype];
-                if('preview' in elementdef) {
+                if('preview' in elementdef && elementdef.preview) {
                     elements.push(
-                        <div className="fpb-addlist-type" data-type={elementtype} key={uniqueId()}>
+                        <div className={"fpb-addlist-type " + elementdef.size} data-type={elementtype} key={uniqueId()}>
                             <div className="fpb-addlist-type_content">
                                 <img src={elementdef.preview}/>
                             </div>
@@ -35,8 +35,8 @@ export default class AddList extends React.Component {
                     );
                 } else {
                     elements.push(
-                        <div className="fpb-addlist-type" data-type={elementtype} key={uniqueId()}>
-                            <div className="fpb-addlist-type_content">
+                        <div className={"fpb-addlist-type " + elementdef.size} data-type={elementtype} key={uniqueId()}>
+                            <div className="fpb-addlist-type_content fpb-addlist-type_content--text">
                                 {elementdef.name}
                             </div>
                         </div>
@@ -77,7 +77,9 @@ export default class AddList extends React.Component {
                 <div className="fpb-addlist_handle" onClick={this.toggle}>
                     <span></span>
                 </div>
+                <div className="fpb-addlist_groups">
                 {groups}
+                </div>
             </div>
         );
     }

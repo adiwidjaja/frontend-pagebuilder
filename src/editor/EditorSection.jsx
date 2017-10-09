@@ -82,6 +82,7 @@ export default class EditorSection extends React.Component {
                             toolbar: 'undo redo | bold italic subscript superscript | code',
                             menubar: false,
                             forced_root_block : "",
+                            paste_as_text: true,
                             force_br_newlines : true,
                             force_p_newlines : false,
                             setup: function(ref) {
@@ -89,6 +90,8 @@ export default class EditorSection extends React.Component {
                             }
                         },
                         onChange: e => { this.handleEditorChange(editor, name); },
+                        onFocus: e => { this.handleEditorFocus(editor, name); },
+                        onBlur: e => { this.handleEditorBlur(editor, name); },
                         onKeyup: e => { this.handleEditorChange(editor, name); }
                     }, null);
                 }
@@ -125,7 +128,8 @@ export default class EditorSection extends React.Component {
                         config: {
                             inline: true,
                             menubar: false,
-                            plugins: "lists link",
+                            paste_as_text: true,
+                            plugins: "paste lists link code",
                             language: 'de',
                             toolbar: "undo redo | styleselect | bold italic subscript superscript | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link | code",
                             setup: function(ref) {
@@ -133,6 +137,8 @@ export default class EditorSection extends React.Component {
                             }
                         },
                         onChange: e => { this.handleEditorChange(editor, name); },
+                        onFocus: e => { this.handleEditorFocus(editor, name); },
+                        onBlur: e => { this.handleEditorBlur(editor, name); },
                         onKeyup: e => { this.handleEditorChange(editor, name); }
                     }, null);
                     return reditor;
@@ -148,6 +154,8 @@ export default class EditorSection extends React.Component {
         ];
 
         this.handleEditorChange = this.handleEditorChange.bind(this);
+        this.handleEditorFocus = this.handleEditorFocus.bind(this);
+        this.handleEditorBlur = this.handleEditorBlur.bind(this);
         this.editForm = this.editForm.bind(this);
         this.buildTemplate = this.buildTemplate.bind(this);
         this.saveForm = this.saveForm.bind(this);
@@ -158,7 +166,17 @@ export default class EditorSection extends React.Component {
     }
     handleEditorChange(editor, name) {
         // console.log("handleEditorChange: "+name);
+        // this.props.section.setContent(name, editor.getContent());
+        //Don't set content, just notify
+        // this.props.section.onChange(editor.getContent(), false);
+    }
+    handleEditorBlur(editor, name) {
+        console.log("handleEditorBlur: "+name);
         this.props.section.setContent(name, editor.getContent());
+    }
+    handleEditorFocus(editor, name) {
+        console.log("handleEditorFocus: "+name);
+        this.props.section.onChange(editor.getContent(), false);
     }
     editForm() {
         this.props.modal.showForm(this.props.elementdef.formdef, this.props.section.getContent(), "Element bearbeiten", this.saveForm);
@@ -167,7 +185,8 @@ export default class EditorSection extends React.Component {
         this.props.section.mergeContent(data);
     }
     trash() {
-        this.props.modal.showConfirm("Element wirklich löschen?", "Element löschen", this.doTrash)
+        const name = this.props.elementdef.name;
+        this.props.modal.showConfirm("Element "+name+" wirklich löschen?", "Element löschen", this.doTrash)
     }
     doTrash() {
         this.props.section.delete();

@@ -37,7 +37,7 @@ export default class Section {
     //TODO: Rename!
     setContent(name, content) {
         this.data.content[name] = content;
-        this.onChange(this.data.content, false);
+        this.onChange(this.data.content, true);
     }
 
     mergeContent(content) {

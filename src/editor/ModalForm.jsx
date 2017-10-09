@@ -18,15 +18,15 @@ export default class ModalForm extends React.Component {
             formdata: null,
             callback: data => {},
             title: '',
-            content: <p></p>
+            content: null
         };
     }
-    showModal(content, title) {
+    showModal(content, title, showok=true) {
         this.setState({
             showmodal: true,
             content,
             title: title,
-            showok: true
+            showok: showok
         });
     }
     showConfirm(content, title, callback) {
@@ -56,7 +56,7 @@ export default class ModalForm extends React.Component {
             formdata: null,
             title: '',
             callback: data => {},
-            content: <p></p>
+            content: null
         });
     }
     onOk() {
@@ -72,13 +72,14 @@ export default class ModalForm extends React.Component {
         this.hideModal();
     }
     getContent() {
+        // console.log(this.state.content);
         return {__html: this.state.content};
     }
     render() {
         if(this.state.showmodal)
             return (
                 <Modal title={this.state.title} hideModal={this.hideModal} showOk={this.state.showok} onOk={this.onOk}>
-                    <div dangerouslySetInnerHTML={this.getContent()}></div>
+                    {this.state.content?<div dangerouslySetInnerHTML={this.getContent()}></div>:null}
                     {this.state.formdef?<Form schema={this.state.formdef} formData={this.state.formdata} onSubmit={this.submitForm} >
                         <div className="modal-footer">
                             <button type="submit" className="btn btn-primary"  ref={(button) => { this.button = button; }}>Speichern</button>
